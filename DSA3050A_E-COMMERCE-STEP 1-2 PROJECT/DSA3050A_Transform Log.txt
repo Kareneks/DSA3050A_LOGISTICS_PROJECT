@@ -1,0 +1,16 @@
+The Transformation Log
+Power Query Transformation Log
+Dataset: E-commerce Delivery Analytics has 50,000 rows and 30 columns.
+Objective: Clean data, handle anomalies and derive time-based delivery metrics for delay analysis.
+Transformation Operations:
+a)	Changed Data Types: Converted order_date to Date, and promised_delivery_days, actual_delivery_days, and shipping_cost_usd to numeric types to enable mathematical calculations.
+b)	Removed Blank Rows: Eliminated completely empty rows to ensure accurate row counts and prevent null errors in visuals.
+c)	Trimmed and Cleaned Text: Applied Trim and Clean to shipping_method, weather_condition, and payment_method to remove invisible spaces and standardize categories for grouping.
+d)	Standardized Null Values: Replaced "None" values in the return_reason column with "Not Returned" for clearer reporting.
+e)	Filtered In-Transit Orders: Filtered the tracking_status column to only include "Delivered" orders, ensuring the analysis focuses on completed fulfillment.
+f)	Derived Column - DelayedDays: Created a custom column: [actual_delivery_days] - [promised_delivery_days]. Positive numbers indicate a late delivery.
+g)	Derived Column - DeliveryStatus: Created a conditional column to classify orders as "Late" (if DelayedDays > 0) or "On Time" (if DelayedDays <= 0).
+h)	Derived Column - ShippingCostPerItem: Created a custom column: [shipping_cost_usd] / [delivery_attempts] to understand the cost efficiency per delivery attempt.
+
+QA Summary:
+Verified there are no exact duplicate rows. After transformation, the new DeliveryStatus and DelayedDays columns show 100% Valid (0% Error, 0% Empty) in Power Query Column Quality profiling. The cleaned dataset retains exactly 44,184 valid delivered orders for analysis after data quality check.
